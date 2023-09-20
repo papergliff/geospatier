@@ -1,0 +1,8 @@
+<div class="leaflet-container" style="min-height: 800px;" data-controller="map" data-map-target="placeholder">
+
+</div>
+
+<script>
+  const polygonPoints = <%= raw @polygon_points.to_json %>;
+  const centroid = <%= raw @centroid.to_json %>
+</script>
