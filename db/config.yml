@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: geomarks
+  username: geouser
+  password: geopassword
+  host: 127.0.0.1 
+  port: 5432
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  database: geomarks
+  pool: 5
+  username: geouser 
+  password: geopassword
+
+test: &test
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  database: geomarks_test
+  pool: 5
+  username: geouser 
+  password: geopassword
