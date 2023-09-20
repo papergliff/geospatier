@@ -3,11 +3,13 @@ class Ticket
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
-
+  
   attr_accessor :id, :request_number, :sequence_number, :request_type, 
                 :request_action, :response_due_date_time, :primary_service_area_code,
                 :additional_service_area_codes, :digsite_info, :updated_at, :created_at
-              
+  
+  validates :request_number, :digsite_info, presence: true
+
   def save
     if valid?
       columns = [

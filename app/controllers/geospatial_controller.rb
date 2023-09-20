@@ -8,9 +8,9 @@ class GeospatialController < ApplicationController
     ticket = Ticket.new(ticket_data)
     if ticket.save
       excavator_data[:ticket_id] = ticket.id
-      puts "\n ticket id is #{ticket.id} \n"
+
       excavator = Excavator.new(excavator_data)
-      
+
       if excavator.save
         render json: { message: "Successfully saved!" }, status: :created
       else

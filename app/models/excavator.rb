@@ -6,6 +6,8 @@ class Excavator
 
   attr_accessor :id, :company_name, :address, :crew_on_site,
                 :ticket_id, :updated_at, :created_at
+
+  validates :company_name, :ticket_id, presence: true
               
   def save
     if valid?
