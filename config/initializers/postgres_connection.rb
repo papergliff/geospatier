@@ -1,8 +1,6 @@
 require 'pg'
 require 'yaml'
 require 'erb'
-require 'dotenv-rails'
-require 'dotenv/load'
 
 db_config = YAML.load(ERB.new(File.read(Rails.root.join('config', 'database.yml'))).result)[Rails.env]
 

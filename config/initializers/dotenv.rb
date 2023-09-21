@@ -1,1 +1,0 @@
-Dotenv::Railtie.load
