@@ -1,7 +1,7 @@
 require 'pg'
 require 'yaml'
 
-db_config = YAML.load_file(Rails.root.join('db', 'config.yml'))[Rails.env]
+db_config = YAML.load_file(Rails.root.join('config', 'database.yml'))[Rails.env]
 
 $pg_conn = PG.connect(
   dbname: db_config['database'],
