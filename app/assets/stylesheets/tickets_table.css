@@ -1,0 +1,70 @@
+.tickets--table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tickets--table--content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.table__header__container {
+  display: grid;
+  gap: 0.8rem;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.table__header__container .table__header--header:first-child {
+  padding-left: 25px;
+}
+
+.table__header--header {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  color: #859AB5;
+  gap: 0.8rem;
+  height: 4.6rem;
+}
+
+.table--row {
+  display: grid;
+  gap: 0.8rem;
+  border-radius: 1.6rem;
+  border: solid var(--border-color);
+  border-width: 0 0.1rem 0.1rem 0.1rem;
+  padding: 1rem 0;
+  align-items: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.table--row .table--cell:first-child {
+  padding-left: 25px;
+}
+
+.table--row:hover {
+  background-color: var(--button-secondary-hover);
+}
+
+.table--cell {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

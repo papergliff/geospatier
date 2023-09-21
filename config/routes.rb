@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  post '/geospatial', to: 'geospatial#create'
+  post "/geospatial", to: "geospatial#create"
 
+  get "/tickets", to: "tickets#index"
   get "/tickets/:id", to: "tickets#show"
 end

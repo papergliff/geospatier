@@ -1,4 +1,21 @@
 class TicketsController < ApplicationController
+  def index
+    sql = <<-SQL
+      SELECT 
+        tickets.id as ticket_id,
+        tickets.request_number,
+        tickets.request_type,
+        excavators.company_name,
+        excavators.crew_on_site
+      FROM
+        tickets
+      JOIN
+        excavators ON tickets.id = excavators.ticket_id;
+    SQL
+  
+    @result = $pg_conn.exec_params(sql)
+  end
+
   def show
     result = $pg_conn.exec_params('SELECT ST_AsText(digsite_info) as digsite_info FROM tickets WHERE id = $1 LIMIT 1', [params[:id]])
   
@@ -21,6 +38,4 @@ class TicketsController < ApplicationController
       redirect_to tickets_path
     end
   end
-  
-  
 end
