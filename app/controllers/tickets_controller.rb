@@ -17,22 +17,29 @@ class TicketsController < ApplicationController
   end
 
   def show
-    result = $pg_conn.exec_params('SELECT ST_AsText(digsite_info) as digsite_info FROM tickets WHERE id = $1 LIMIT 1', [params[:id]])
+    sql = <<-SQL
+      SELECT 
+        ST_AsGeoJSON(digsite_info) as digsite_info,
+        ST_AsGeoJSON(ST_Centroid(digsite_info)) as centroid
+      FROM 
+        tickets 
+      WHERE 
+        id = $1 
+      LIMIT 1
+    SQL
+
+    result = $pg_conn.exec_params(sql, [params[:id]])
   
     if result.ntuples > 0
-      # TODO: following to service:
-      # Convert the digsite_info from WKT to an array of points
-      wkt_data = result[0]['digsite_info']
-      # TODO: reimagine following without global variables if possible
-      @polygon_points = wkt_data.gsub("POLYGON((", "").gsub("))", "").split(",").map do |point|
-        lat, lon = point.split(" ")
-        { lat: lat.to_f, lng: lon.to_f }
+      digsite_json = JSON.parse(result[0]['digsite_info'])
+      centroid_json = JSON.parse(result[0]['centroid'])
+
+      @polygon_points = digsite_json['coordinates'][0].map do |lon, lat|
+        { lat: lat, lng: lon }
       end
 
-      avg_longitude = @polygon_points.sum { |coord| coord[:lat] } / @polygon_points.size
-      avg_latitude = @polygon_points.sum { |coord| coord[:lng] } / @polygon_points.size
-
-      @centroid = [avg_longitude, avg_latitude]
+      lon, lat = centroid_json['coordinates']
+      @centroid = [lat, lon]
     else
       flash[:alert] = "Ticket not found"
       redirect_to tickets_path
