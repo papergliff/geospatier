@@ -1,7 +1,10 @@
 require 'pg'
 require 'yaml'
+require 'erb'
+require 'dotenv-rails'
+require 'dotenv/load'
 
-db_config = YAML.load_file(Rails.root.join('config', 'database.yml'))[Rails.env]
+db_config = YAML.load(ERB.new(File.read(Rails.root.join('config', 'database.yml'))).result)[Rails.env]
 
 $pg_conn = PG.connect(
   dbname: db_config['database'],

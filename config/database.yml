@@ -1,10 +1,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: geomarks
-  username: geouser
+  database: <%= ENV["DB_NAME"] %>
+  username: <%= ENV["DB_USER"] %> 
   password: geopassword
-  host: 127.0.0.1 
+  host: <%= ENV["DB_HOST"] %>
   port: 5432
 
 production:
