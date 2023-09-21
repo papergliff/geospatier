@@ -11,10 +11,12 @@ production:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: geomarks
+  database: <%= ENV["DB_NAME"] %> 
   pool: 5
-  username: geouser 
-  password: geopassword
+  username: <%= ENV["DB_USER"] %> 
+  password: <%= ENV["DB_PASS"] %>
+  host: <%= ENV["DB_HOST"] %>
+  port: 5432
 
 test: &test
   adapter: postgresql
