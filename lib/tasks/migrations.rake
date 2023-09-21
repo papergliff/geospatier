@@ -5,7 +5,7 @@ namespace :db do
     require 'yaml'
 
     # Load the database configuration
-    db_config = YAML.load_file(Rails.root.join('config', 'database.yml'))[Rails.env]
+    db_config = YAML.load(ERB.new(File.read(Rails.root.join('config', 'database.yml'))).result)[Rails.env]
     conn = PG.connect(
       dbname: db_config['database'],
       user: db_config['username'],
