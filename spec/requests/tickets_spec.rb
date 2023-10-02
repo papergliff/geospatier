@@ -22,29 +22,25 @@ RSpec.describe "Tickets", type: :request do
 
   describe "GET /tickets/:id" do
     let(:ticket) do
-      t = Ticket.new(
+      {
+        id: 1,
         request_number: "12345",
-        digsite_info: {
-          coordinates:[[
-            [-81.13390268058475, 32.07206917625161],
-            [-81.14660562247929, 32.04064386441295],
-            [-81.08858407706913, 32.02259853170128],
-          ]]
-        }
-      ) 
-      allow(t).to receive(:save).and_return(true)
-      allow(t).to receive(:id).and_return(1)
-      t
-    end
-
-    let (:centroid) do
-      { "coordinates" => [-81.13390268058475, 32.07206917625161] }
+        polygon_points: [
+            { lat: -81.13390268058475, lng: 32.07206917625161 },
+            { lat: -81.14660562247929, lng: 32.04064386441295 },
+            { lat: -81.08858407706913, lng: 32.02259853170128 },
+        ],
+        centroid: [
+          -81.13390268058475, 32.07206917625161
+        ]
+      }
     end
 
     before do
-      serialized_digsite_info = ticket.digsite_info.to_json
-      mock_row = { "id" => "1", "request_number" => ticket.request_number,
-                   "digsite_info" => serialized_digsite_info, "centroid" => centroid.to_json }
+      serialized_digsite_info = ticket[:polygon_points].to_json
+      mock_row = { "id" => "1", "request_number" => ticket[:request_number],
+                   "polygon_points" => serialized_digsite_info,
+                   "centroid" => ticket[:centroid].to_json }
       mock_result = double('Result', first: mock_row, ntuples: 1)
 
       allow(mock_result).to receive(:[]).with(0).and_return(mock_row)
@@ -53,7 +49,7 @@ RSpec.describe "Tickets", type: :request do
     
 
     it "digsite info should be visible on the map" do
-      get "/tickets/#{ticket.id}"
+      get "/tickets/#{ticket[:id]}"
 
       expect(response).to have_http_status(:success)
 

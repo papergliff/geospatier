@@ -10,7 +10,7 @@
     <div class="table__header--header">Crew On Site</div>
   </div>
   <div class="tickets--table--content">
-    <% @result.each do |row| %>
+    <% @tickets.each do |row| %>
       <a href="/tickets/<%= row['ticket_id'] %>">
         <div class="table--row">
           <div class="table--cell"><%= row['request_number'] %></div>

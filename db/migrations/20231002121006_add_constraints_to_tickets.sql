@@ -1,0 +1,2 @@
+ALTER TABLE tickets ALTER COLUMN digsite_info SET NOT NULL;
+ALTER TABLE tickets ALTER COLUMN request_number SET NOT NULL;

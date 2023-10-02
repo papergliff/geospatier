@@ -5,6 +5,9 @@ export default class extends Controller {
 
   connect(){
     import("leaflet").then( leaflet => {
+      const polygonPoints = JSON.parse(this.element.dataset.polygonPoints);
+      const centroid = JSON.parse(this.element.dataset.centroid);
+
       this.map = leaflet.map(this.placeholderTarget, { zoomDelta: 0.5, zoomSnap: 0.5 }).setView(centroid, 10)
 
       leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

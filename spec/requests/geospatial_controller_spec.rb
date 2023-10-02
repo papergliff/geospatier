@@ -124,111 +124,10 @@ RSpec.describe GeospatialController, type: :controller do
     end
 
     let(:invalid_json) do
-      {
-        "ContactCenter":"UPCA",
-        "RequestNumber":"09252012-00001",
-        "ServiceArea":{
-          "PrimaryServiceAreaCode":{
-            "SACode":"ZZGL103"
-          },
-          "AdditionalServiceAreaCodes":{
-            "SACode":[
-              "ZZL01",
-              "ZZL02",
-              "ZZL03"
-            ]
-          }
-        },
-        "Excavator":{
-          "Address":"555 Some RD",
-          "City":"SOME PARK",
-          "State":"ZZ",
-          "Zip":"55555",
-          "Type":"Excavator",
-          "Contact":{
-            "Name":"Johnny Doe",
-            "Phone":"1115552345",
-            "Email":"example@example.com"
-          },
-          "FieldContact":{
-            "Name":"Field Contact",
-            "Phone":"1235557924",
-            "Email":"example@example.com"
-          },
-          "CrewOnsite":"true"
-        },
-        "ExcavationInfo":{
-          "TypeOfWork":"rpr man hole tops",
-          "WorkDoneFor":"gpc",
-          "ProjectDuration":"60 days",
-          "ProjectStartDate":"2011/07/08 07:00:00",
-          "Explosives":"No",
-          "UndergroundOverhead":"Underground",
-          "HorizontalBoring":"Road, Driveway, and Sidewalk",
-          "Whitelined":"No",
-          "LocateInstructions":"locate along the r/o/w on both sides of the rd - including the rd itself - from inter to inter ",
-          "Remarks":"Previous Request Number:05161-120-011\n\n\t\t\tPrevious Request Number:06044-254-020\n\n\t\t\tPrevious Request Number:06171-300-030",
-          "DigsiteInfo":{
-            "LookupBy":"MANUAL",
-            "LocationType":"Multiple Address",
-            "Subdivision":"",
-            "AddressInfo":{
-              "State":"ST",
-              "County":"COUNTY",
-              "Place":"PLACE",
-              "Zip":"",
-              "Address":{
-                "AddressNum":[
-                  "Address 1",
-                  "Address 2"
-                ]
-              },
-              "Street":{
-                "Prefix":"",
-                "Name":"Trinity",
-                "Type":"Ave",
-                "Suffix":"SW"
-              }
-            },
-            "NearStreet":{
-              "State":"XX",
-              "County":"SomeCounty",
-              "Place":"City",
-              "Prefix":"",
-              "Name":"",
-              "Type":"",
-              "Suffix":""
-            },
-            "Intersection":{
-              "ItoI":[
-                {
-                  "State":"XX",
-                  "County":"FULERTON",
-                  "Place":"NORCROSS",
-                  "Prefix":"",
-                  "Name":"London",
-                  "Type":"St",
-                  "Suffix":"SW"
-                },
-                {
-                  "State":"ZZ",
-                  "County":"COUNTY",
-                  "Place":"ATLANTA",
-                  "Prefix":"",
-                  "Name":"Jefferson",
-                  "Type":"Ave",
-                  "Suffix":"SW"
-                }
-              ]
-            }
-          }
-        }
-      }
-    end
-
-    before do
-      mock_result = double('Result', first: {"id" => "1"}, ntuples: 1)
-      allow($pg_conn).to receive(:exec_params).and_return(mock_result)
+      invalid_json = valid_json
+      invalid_json.delete(:RequestNumber)
+      invalid_json.delete(:WellKnownText)
+      invalid_json
     end
 
     context "with valid data" do
@@ -239,7 +138,7 @@ RSpec.describe GeospatialController, type: :controller do
     end
 
     context "with invalid data" do
-      it "returns an error" do
+      it "returns an unprocessable entity" do
         post :create, params: invalid_json, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
       end

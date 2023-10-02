@@ -1,8 +1,6 @@
-<div class="leaflet-container" style="min-height: 800px;" data-controller="map" data-map-target="placeholder">
-
+<div class="leaflet-container" style="min-height: 800px;" 
+     data-controller="map" 
+     data-map-target="placeholder"
+     data-polygon-points="<%= @digsite_info[:polygon_points].to_json %>"
+     data-centroid="<%= @digsite_info[:centroid].to_json %>">
 </div>
-
-<script>
-  const polygonPoints = <%= raw @polygon_points.to_json %>;
-  const centroid = <%= raw @centroid.to_json %>
-</script>
