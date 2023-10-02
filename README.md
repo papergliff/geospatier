@@ -2,6 +2,10 @@
 
 Simple solution on saving and plotting polygons on a map, using non-active-record way with pure sql, including custom migrations
 
+### to see the tickets with polygon data:
+https://geospatier.onrender.com
+
+
 ### to save a ticket with excavator data post request to /geospatial needs to be sent, example:
 
 https://geospatier.onrender.com/geospatial
